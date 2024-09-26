@@ -10,7 +10,8 @@ import SwiftData
 
 @main
 struct DEWoerterbuchApp: App {
-    let modelContainer: ModelContainer
+    private let modelContainer: ModelContainer
+    private let dataStorage: PDataStorage
     
     var body: some Scene {
         WindowGroup {
@@ -21,7 +22,9 @@ struct DEWoerterbuchApp: App {
     
     init() {
         do {
-            modelContainer = try ModelContainer(for: Word.self)
+            let container = try ModelContainer(for: Word.self)
+            self.modelContainer = container
+            self.dataStorage = DataStorage(modelContainer: modelContainer)
         } catch {
             fatalError("Failed to create ModelContainer for Movie.")
         }

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		058D87A02C88B53000123033 /* DataStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 058D879F2C88B53000123033 /* DataStorage.swift */; };
 		05A3FCAD2C792353007FBE31 /* DictionaryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05A3FCAC2C792353007FBE31 /* DictionaryViewModel.swift */; };
 		05A3FCAF2C792391007FBE31 /* DictionaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05A3FCAE2C792391007FBE31 /* DictionaryView.swift */; };
 		05A3FCB22C792FE9007FBE31 /* TrainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05A3FCB12C792FE9007FBE31 /* TrainerView.swift */; };
@@ -26,6 +27,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		058D879F2C88B53000123033 /* DataStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataStorage.swift; sourceTree = "<group>"; };
 		05A3FCAC2C792353007FBE31 /* DictionaryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DictionaryViewModel.swift; sourceTree = "<group>"; };
 		05A3FCAE2C792391007FBE31 /* DictionaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DictionaryView.swift; sourceTree = "<group>"; };
 		05A3FCB12C792FE9007FBE31 /* TrainerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainerView.swift; sourceTree = "<group>"; };
@@ -56,6 +58,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		058D879E2C88B51300123033 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				058D879F2C88B53000123033 /* DataStorage.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
 		05A3FCAB2C792339007FBE31 /* DictionaryView */ = {
 			isa = PBXGroup;
 			children = (
@@ -105,6 +115,7 @@
 			children = (
 				05FFB14C2C77CBF900F19D9D /* App */,
 				05FFB1542C77CEE100F19D9D /* Extensions */,
+				058D879E2C88B51300123033 /* Services */,
 				05FFB14E2C77CC3A00F19D9D /* Models */,
 				05FFB14F2C77CC4800F19D9D /* Modules */,
 				05FFB14D2C77CC0000F19D9D /* Resources */,
@@ -257,6 +268,7 @@
 				05A3FCB82C79389B007FBE31 /* AddWordView.swift in Sources */,
 				05A3FCB42C793552007FBE31 /* Array.swift in Sources */,
 				05FFB1532C77CDEB00F19D9D /* Category.swift in Sources */,
+				058D87A02C88B53000123033 /* DataStorage.swift in Sources */,
 				05A3FCBB2C7939A8007FBE31 /* AddWordViewModel.swift in Sources */,
 				05A3FCB22C792FE9007FBE31 /* TrainerView.swift in Sources */,
 			);
