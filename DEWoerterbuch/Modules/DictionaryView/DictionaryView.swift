@@ -6,12 +6,13 @@
 //
 
 import SwiftUI
+import SwiftData
 
 typealias DictionaryViewModel = MainView.DictionaryViewModel
 
 struct DictionaryView: View {
     @State private var isShowingAddWordView = false
-    var dictionaryViewModel: DictionaryViewModel
+    @ObservedObject var dictionaryViewModel: DictionaryViewModel
     
     
     var body: some View {
@@ -24,7 +25,11 @@ struct DictionaryView: View {
                         WordCellView(viewModel: cellVm)
                     })
                 })
-                .onDelete(perform: dictionaryViewModel.deleteWords)
+                .onDelete(perform: { indexSet in
+                    Task {
+                        await dictionaryViewModel.deleteWords(in: indexSet)
+                    }
+                })
             })
             .navigationTitle("Dictionary")
             .toolbar(content: {
@@ -34,6 +39,11 @@ struct DictionaryView: View {
             })
             .navigationDestination(isPresented: $isShowingAddWordView, destination: {
                 AddWordView(viewModel: dictionaryViewModel.getAddWordViewModel())
+            })
+            .onAppear(perform: {
+                Task {
+                    await dictionaryViewModel.fetchData()
+                }
             })
         })
     }
@@ -45,5 +55,5 @@ struct DictionaryView: View {
 }
 
 #Preview {
-    DictionaryView(dictionaryViewModel: DictionaryViewModel.previewVM)
+    DictionaryView(dictionaryViewModel: DictionaryViewModel(dataStorage: DataStorage(container: try! ModelContainer(for: Word.self))))
 }

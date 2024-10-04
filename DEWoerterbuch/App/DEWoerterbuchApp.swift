@@ -15,7 +15,8 @@ struct DEWoerterbuchApp: App {
     
     var body: some Scene {
         WindowGroup {
-            MainView(modelContext: modelContainer.mainContext)
+            let mainVm = MainViewModel(dataStorage: dataStorage)
+            MainView(viewModel: mainVm)
         }
         .modelContainer(modelContainer)
     }
@@ -24,7 +25,7 @@ struct DEWoerterbuchApp: App {
         do {
             let container = try ModelContainer(for: Word.self)
             self.modelContainer = container
-            self.dataStorage = DataStorage(modelContainer: modelContainer)
+            self.dataStorage = DataStorage(container: modelContainer)
         } catch {
             fatalError("Failed to create ModelContainer for Movie.")
         }

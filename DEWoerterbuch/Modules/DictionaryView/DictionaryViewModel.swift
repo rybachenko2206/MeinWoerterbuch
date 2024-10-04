@@ -10,65 +10,54 @@ import SwiftData
 import Combine
 
 extension MainView {
-    @Observable
-    class DictionaryViewModel {
+    
+    class DictionaryViewModel: ObservableObject {
         // MARK: - Properties
-        private var modelContext: ModelContext
-        private(set) var wordCellViewModels: [WordCellViewModel] = []
+        private let dataStorage: PDataStorage
+        @Published private(set) var wordCellViewModels: [WordCellViewModel] = []
         private var subscriptions: Set<AnyCancellable> = []
         
         // MARK: - Init
-        init(modelContext: ModelContext) {
-            self.modelContext = modelContext
-            
-            fetchData()
+        init(dataStorage: PDataStorage) {
+            self.dataStorage = dataStorage
         }
         
         // MARK: - Public funcs
-        func deleteWords(in indexSet: IndexSet) {
+        func deleteWords(in indexSet: IndexSet) async {
             for index in indexSet {
                 if let wordCellVM = wordCellViewModels[safe: index] {
                     wordCellViewModels.remove(at: index)
-                    modelContext.delete(wordCellVM.word)
+                    await dataStorage.deleteWord(wordCellVM.word)
                 }
             }
+        }
+        
+        func fetchData() async {
+            let words = await dataStorage.fetchWords()
             
-            saveContext()
+            await MainActor.run(body: {
+                wordCellViewModels = words.map({ WordCellViewModel(word: $0) })
+            })
         }
         
         func getAddWordViewModel() -> AddWordViewModel {
             let addVm = AddWordViewModel(word: nil)
-            addVm.saveWordCompletion = { [weak self] wordToSave in
+            addVm.saveWordCompletion = { [weak self] word in
                 guard let self else { return }
-                if !self.wordCellViewModels.contains(where: { $0.id == wordToSave.id }) {
-                    self.modelContext.insert(wordToSave)
+                if !self.wordCellViewModels.contains(where: { $0.id == word.id }) {
+                    Task {
+                        await self.dataStorage.addNewWord(word)
+                        let wordCellVm = WordCellViewModel(word: word)
+                        self.wordCellViewModels.append(wordCellVm)
+                    }
                 }
-                self.saveContext()
             }
             
             return addVm
         }
         
         // MARK: - Private funcs
-        private func fetchData() {
-            do {
-                let descriptor = FetchDescriptor<Word>(sortBy: [SortDescriptor(\.value)])
-                let words = try modelContext.fetch(descriptor)
-                wordCellViewModels = words.map({ WordCellViewModel(word: $0) })
-            } catch {
-                pl("Fetch data failed")
-            }
-        }
         
-        private func saveContext() {
-            do {
-                try modelContext.save()
-            } catch {
-                pl("save context failed with error: \(error)")
-            }
-        }
-        
-        static let previewVM = DictionaryViewModel(modelContext: ModelContext.init( try! ModelContainer(for: Word.self)))
     }
 }
 

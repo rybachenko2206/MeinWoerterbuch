@@ -9,18 +9,15 @@ import SwiftUI
 import SwiftData
 
 struct MainView: View {
-    private let modelContext: ModelContext
-    @State private var dictionaryViewModel: DictionaryViewModel
+    private var viewModel: MainViewModel
     
-    init(modelContext: ModelContext) {
-        self.modelContext = modelContext
-        let dictionaryVm = DictionaryViewModel(modelContext: modelContext)
-        _dictionaryViewModel = State(initialValue: dictionaryVm)
+    init(viewModel: MainViewModel) {
+        self.viewModel = viewModel
     }
     
     var body: some View {
         TabView(content: {
-            DictionaryView(dictionaryViewModel: dictionaryViewModel)
+            DictionaryView(dictionaryViewModel: viewModel.dictionaryViewModel)
                 .tabItem {
                     Label("Dictionary", systemImage: "text.book.closed")
                 }
@@ -30,32 +27,9 @@ struct MainView: View {
                 }
             
         })
-//        NavigationStack(root: {
-//            List(content: {
-//                ForEach(allWords, content: { item in
-//                    VStack(alignment: .leading, content: {
-//                        Text(item.value)
-//                            .font(.headline)
-//                        Text(item.translation)
-//                            .font(.subheadline)
-//                    })
-//                })
-//            })
-//            .navigationTitle("Dictionary")
-//            .toolbar(content: {
-//                Button(action: addWord, label: {
-//                    Image(systemName: "plus")
-//                })
-//            })
-//        })
     }
-    
-    func addWord() {
-        pl("add word button tapped")
-    }
-    
 }
 
 #Preview {
-    MainView(modelContext: try! ModelContainer(for: Word.self).mainContext)
+    MainView(viewModel: MainViewModel(dataStorage: DataStorage(container: try! ModelContainer(for: Word.self))))
 }

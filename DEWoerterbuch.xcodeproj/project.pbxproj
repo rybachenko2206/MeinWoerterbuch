@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		058D87A02C88B53000123033 /* DataStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 058D879F2C88B53000123033 /* DataStorage.swift */; };
+		059099102CA6C1D5006D5C18 /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0590990F2CA6C1D4006D5C18 /* MainViewModel.swift */; };
 		05A3FCAD2C792353007FBE31 /* DictionaryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05A3FCAC2C792353007FBE31 /* DictionaryViewModel.swift */; };
 		05A3FCAF2C792391007FBE31 /* DictionaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05A3FCAE2C792391007FBE31 /* DictionaryView.swift */; };
 		05A3FCB22C792FE9007FBE31 /* TrainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05A3FCB12C792FE9007FBE31 /* TrainerView.swift */; };
@@ -28,6 +29,7 @@
 
 /* Begin PBXFileReference section */
 		058D879F2C88B53000123033 /* DataStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataStorage.swift; sourceTree = "<group>"; };
+		0590990F2CA6C1D4006D5C18 /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
 		05A3FCAC2C792353007FBE31 /* DictionaryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DictionaryViewModel.swift; sourceTree = "<group>"; };
 		05A3FCAE2C792391007FBE31 /* DictionaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DictionaryView.swift; sourceTree = "<group>"; };
 		05A3FCB12C792FE9007FBE31 /* TrainerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainerView.swift; sourceTree = "<group>"; };
@@ -161,6 +163,7 @@
 			isa = PBXGroup;
 			children = (
 				05FFB1402C77CB6B00F19D9D /* MainView.swift */,
+				0590990F2CA6C1D4006D5C18 /* MainViewModel.swift */,
 				05A3FCAB2C792339007FBE31 /* DictionaryView */,
 				05A3FCB02C792FA8007FBE31 /* Trainer */,
 			);
@@ -271,6 +274,7 @@
 				058D87A02C88B53000123033 /* DataStorage.swift in Sources */,
 				05A3FCBB2C7939A8007FBE31 /* AddWordViewModel.swift in Sources */,
 				05A3FCB22C792FE9007FBE31 /* TrainerView.swift in Sources */,
+				059099102CA6C1D5006D5C18 /* MainViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
