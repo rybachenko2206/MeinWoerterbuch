@@ -20,8 +20,8 @@ class WordCellViewModel: ObservableObject, Identifiable {
         self.word = word
     }
 
-    func getEditWordViewModel() -> AddWordViewModel {
-        AddWordViewModel(word: word)
+    func getEditWordViewModel() -> WordViewModel {
+        WordViewModel(word: word)
     }
 }
 

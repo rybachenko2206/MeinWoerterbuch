@@ -40,8 +40,8 @@ extension MainView {
             })
         }
         
-        func getAddWordViewModel() -> AddWordViewModel {
-            let addVm = AddWordViewModel(word: nil)
+        func getAddWordViewModel() -> WordViewModel {
+            let addVm = WordViewModel(word: nil)
             addVm.saveWordCompletion = { [weak self] word in
                 guard let self else { return }
                 if !self.wordCellViewModels.contains(where: { $0.id == word.id }) {

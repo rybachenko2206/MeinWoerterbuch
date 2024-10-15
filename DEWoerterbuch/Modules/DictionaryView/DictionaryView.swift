@@ -11,7 +11,7 @@ import SwiftData
 typealias DictionaryViewModel = MainView.DictionaryViewModel
 
 struct DictionaryView: View {
-    @State private var isShowingAddWordView = false
+    @State private var showAddWordModalView = false
     @ObservedObject var dictionaryViewModel: DictionaryViewModel
     
     
@@ -20,7 +20,7 @@ struct DictionaryView: View {
             List(content: {
                 ForEach(dictionaryViewModel.wordCellViewModels, content: { cellVm in
                     NavigationLink(destination: {
-                        AddWordView(viewModel: cellVm.getEditWordViewModel())
+                        NewWordView(viewModel: cellVm.getEditWordViewModel())
                     }, label: {
                         WordCellView(viewModel: cellVm)
                     })
@@ -36,9 +36,9 @@ struct DictionaryView: View {
                 Button(action: addWord, label: {
                     Image(systemName: "plus")
                 })
-            })
-            .navigationDestination(isPresented: $isShowingAddWordView, destination: {
-                AddWordView(viewModel: dictionaryViewModel.getAddWordViewModel())
+                .sheet(isPresented: $showAddWordModalView, content: {
+                    NewWordView(viewModel: dictionaryViewModel.getAddWordViewModel())
+                })
             })
             .onAppear(perform: {
                 Task {
@@ -50,7 +50,7 @@ struct DictionaryView: View {
     
     // MARK: - Actions
     private func addWord() {
-        isShowingAddWordView = true
+        showAddWordModalView = true
     }
 }
 

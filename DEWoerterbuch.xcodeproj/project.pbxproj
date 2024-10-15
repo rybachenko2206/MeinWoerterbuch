@@ -13,8 +13,8 @@
 		05A3FCAF2C792391007FBE31 /* DictionaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05A3FCAE2C792391007FBE31 /* DictionaryView.swift */; };
 		05A3FCB22C792FE9007FBE31 /* TrainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05A3FCB12C792FE9007FBE31 /* TrainerView.swift */; };
 		05A3FCB42C793552007FBE31 /* Array.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05A3FCB32C793552007FBE31 /* Array.swift */; };
-		05A3FCB82C79389B007FBE31 /* AddWordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05A3FCB72C79389B007FBE31 /* AddWordView.swift */; };
-		05A3FCBB2C7939A8007FBE31 /* AddWordViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05A3FCBA2C7939A8007FBE31 /* AddWordViewModel.swift */; };
+		05A3FCB82C79389B007FBE31 /* NewWordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05A3FCB72C79389B007FBE31 /* NewWordView.swift */; };
+		05A3FCBB2C7939A8007FBE31 /* WordViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05A3FCBA2C7939A8007FBE31 /* WordViewModel.swift */; };
 		05FFB13F2C77CB6B00F19D9D /* DEWoerterbuchApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05FFB13E2C77CB6B00F19D9D /* DEWoerterbuchApp.swift */; };
 		05FFB1412C77CB6B00F19D9D /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05FFB1402C77CB6B00F19D9D /* MainView.swift */; };
 		05FFB1432C77CB6D00F19D9D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 05FFB1422C77CB6D00F19D9D /* Assets.xcassets */; };
@@ -34,8 +34,8 @@
 		05A3FCAE2C792391007FBE31 /* DictionaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DictionaryView.swift; sourceTree = "<group>"; };
 		05A3FCB12C792FE9007FBE31 /* TrainerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainerView.swift; sourceTree = "<group>"; };
 		05A3FCB32C793552007FBE31 /* Array.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Array.swift; sourceTree = "<group>"; };
-		05A3FCB72C79389B007FBE31 /* AddWordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddWordView.swift; sourceTree = "<group>"; };
-		05A3FCBA2C7939A8007FBE31 /* AddWordViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddWordViewModel.swift; sourceTree = "<group>"; };
+		05A3FCB72C79389B007FBE31 /* NewWordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewWordView.swift; sourceTree = "<group>"; };
+		05A3FCBA2C7939A8007FBE31 /* WordViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordViewModel.swift; sourceTree = "<group>"; };
 		05FFB13B2C77CB6B00F19D9D /* DEWoerterbuch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DEWoerterbuch.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		05FFB13E2C77CB6B00F19D9D /* DEWoerterbuchApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DEWoerterbuchApp.swift; sourceTree = "<group>"; };
 		05FFB1402C77CB6B00F19D9D /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
@@ -90,8 +90,8 @@
 		05A3FCB52C79380D007FBE31 /* AddWordView */ = {
 			isa = PBXGroup;
 			children = (
-				05A3FCB72C79389B007FBE31 /* AddWordView.swift */,
-				05A3FCBA2C7939A8007FBE31 /* AddWordViewModel.swift */,
+				05A3FCB72C79389B007FBE31 /* NewWordView.swift */,
+				05A3FCBA2C7939A8007FBE31 /* WordViewModel.swift */,
 			);
 			path = AddWordView;
 			sourceTree = "<group>";
@@ -268,11 +268,11 @@
 				05FFB1582C77DC3500F19D9D /* PrintExtensions.swift in Sources */,
 				05FFB1512C77CC7F00F19D9D /* Word.swift in Sources */,
 				05FFB15B2C77DC9700F19D9D /* WordCellView.swift in Sources */,
-				05A3FCB82C79389B007FBE31 /* AddWordView.swift in Sources */,
+				05A3FCB82C79389B007FBE31 /* NewWordView.swift in Sources */,
 				05A3FCB42C793552007FBE31 /* Array.swift in Sources */,
 				05FFB1532C77CDEB00F19D9D /* Category.swift in Sources */,
 				058D87A02C88B53000123033 /* DataStorage.swift in Sources */,
-				05A3FCBB2C7939A8007FBE31 /* AddWordViewModel.swift in Sources */,
+				05A3FCBB2C7939A8007FBE31 /* WordViewModel.swift in Sources */,
 				05A3FCB22C792FE9007FBE31 /* TrainerView.swift in Sources */,
 				059099102CA6C1D5006D5C18 /* MainViewModel.swift in Sources */,
 			);

@@ -1,5 +1,5 @@
 //
-//  AddWordViewModel.swift
+//  WordViewModel.swift
 //  DEWoerterbuch
 //
 //  Created by Roman Rybachenko on 23.08.24.
@@ -8,7 +8,7 @@
 import Foundation
 import Combine
 
-class AddWordViewModel: ObservableObject {
+class WordViewModel: ObservableObject {
     // MARK: - Properties
     private let word: Word?
     private var subscriptions: [AnyCancellable] = []
@@ -74,6 +74,6 @@ class AddWordViewModel: ObservableObject {
     }
 }
 
-extension AddWordViewModel {
-    static let previewVM = AddWordViewModel(word: Word(value: "aufräumen", translation: "прибирати"))
+extension WordViewModel {
+    static let previewVM = WordViewModel(word: Word(value: "aufräumen", translation: "прибирати", additionalInfo: "trennbare verb"))
 }
