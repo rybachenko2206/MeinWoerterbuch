@@ -45,6 +45,8 @@ struct NewWordView: View {
             .padding(.vertical, 20.0)
             .navigationTitle(viewModel.title)
             .navigationBarTitleDisplayMode(.inline)
+            
+            Spacer()
         }
     }
         

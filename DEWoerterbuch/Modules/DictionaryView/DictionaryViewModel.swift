@@ -45,7 +45,7 @@ extension MainView {
             addVm.saveWordCompletion = { [weak self] word in
                 guard let self else { return }
                 if !self.wordCellViewModels.contains(where: { $0.id == word.id }) {
-                    Task {
+                    Task { @MainActor in
                         await self.dataStorage.addNewWord(word)
                         let wordCellVm = WordCellViewModel(word: word)
                         self.wordCellViewModels.append(wordCellVm)
