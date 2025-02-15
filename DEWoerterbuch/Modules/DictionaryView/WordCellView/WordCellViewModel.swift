@@ -11,7 +11,7 @@ class WordCellViewModel: ObservableObject, Identifiable {
     // MARK: - Properties
     let word: Word
     
-    var id: String { word.id }
+    var id: String { word.wordId }
     var value: String { word.value }
     var translation: String { word.translation }
     

@@ -20,6 +20,7 @@ class WordViewModel: ObservableObject {
     @Published var wordValue: String = ""
     @Published var translation: String = ""
     @Published var additionalInfo: String = ""
+    @Published var additionalInfo2: String = ""
     @Published var isSaveButtonEnabled: Bool = false
     
     var saveWordCompletion: ((Word) -> Void)?
@@ -61,11 +62,12 @@ class WordViewModel: ObservableObject {
     }
     
     private func handleWordOrTranslationValueChanged() {
-        let isFilled = !wordValue.isBlank && !translation.isBlank
+        let isFilled = !wordValue.isBlank && !translation.isEmpty
         
         let isChanged: Bool
         if let word {
-            isChanged = word.value != wordValue || word.translation != translation || word.additionalInfo != additionalInfo
+            let translationChanged = word.translation != translation
+            isChanged = word.value != wordValue || translationChanged || word.additionalInfo != additionalInfo
         } else {
             isChanged = true
         }
@@ -75,5 +77,6 @@ class WordViewModel: ObservableObject {
 }
 
 extension WordViewModel {
-    static let previewVM = WordViewModel(word: Word(value: "aufräumen", translation: "прибирати", additionalInfo: "trennbare verb"))
+    private static let wordPreview = Word(value: "aufräumen", translation: "to clean", additionalInfo: "trennbare verb")
+    static let previewVM = WordViewModel(word: wordPreview)
 }

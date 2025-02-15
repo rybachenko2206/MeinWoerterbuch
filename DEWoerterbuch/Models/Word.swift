@@ -10,7 +10,8 @@ import SwiftData
 
 @Model
 class Word {
-    let id: String
+    // MARK: - Properties
+    private(set) var wordId: String
     
     // german word
     var value: String
@@ -18,9 +19,15 @@ class Word {
     // your language translation
     var translation: String
     
-    // any additional information, as synonim(s), past version for verbs, articles for noun etc
+    // any additional info which you would like to add (synonims, translation in other language etc
     var additionalInfo: String
+    
+    // examples of using etc.
+    // this field will be shown likely in TextView
     var additionalInfo2: String
+    
+    // Part of speech details, including additional grammatical information
+    var partOfSpeechDetails: PartOfSpeechDetails?
     
     // from 0 to 100
     var learningProgress: Int
@@ -29,8 +36,14 @@ class Word {
     var updatedAt: Date
     
     // MARK: - Init
-    init(value: String, translation: String, additionalInfo: String = "", learningProgress: Int = 0) {
-        self.id = UUID().uuidString
+    init(
+        value: String,
+        translation: String,
+        partOfSpeechDetails: PartOfSpeechDetails? = nil,
+        additionalInfo: String = "",
+        learningProgress: Int = 0
+    ) {
+        self.wordId = UUID().uuidString
         self.value = value
         self.translation = translation
         self.additionalInfo = additionalInfo
@@ -38,4 +51,5 @@ class Word {
         self.learningProgress = learningProgress
         self.updatedAt = .now
     }
+    
 }

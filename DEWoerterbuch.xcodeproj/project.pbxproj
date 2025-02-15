@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		055741E22D612D7A00A35D4C /* PartOfSpeech.swift in Sources */ = {isa = PBXBuildFile; fileRef = 055741E12D612D7A00A35D4C /* PartOfSpeech.swift */; };
+		055741E42D6131A100A35D4C /* PartOfSpeechDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 055741E32D6131A100A35D4C /* PartOfSpeechDetails.swift */; };
 		058D87A02C88B53000123033 /* DataStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 058D879F2C88B53000123033 /* DataStorage.swift */; };
 		059099102CA6C1D5006D5C18 /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0590990F2CA6C1D4006D5C18 /* MainViewModel.swift */; };
 		05A3FCAD2C792353007FBE31 /* DictionaryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05A3FCAC2C792353007FBE31 /* DictionaryViewModel.swift */; };
@@ -28,6 +30,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		055741E12D612D7A00A35D4C /* PartOfSpeech.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PartOfSpeech.swift; sourceTree = "<group>"; };
+		055741E32D6131A100A35D4C /* PartOfSpeechDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PartOfSpeechDetails.swift; sourceTree = "<group>"; };
 		058D879F2C88B53000123033 /* DataStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataStorage.swift; sourceTree = "<group>"; };
 		0590990F2CA6C1D4006D5C18 /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
 		05A3FCAC2C792353007FBE31 /* DictionaryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DictionaryViewModel.swift; sourceTree = "<group>"; };
@@ -60,6 +64,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		055741DE2D60D3A800A35D4C /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				05A3FCBA2C7939A8007FBE31 /* WordViewModel.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
 		058D879E2C88B51300123033 /* Services */ = {
 			isa = PBXGroup;
 			children = (
@@ -91,7 +103,7 @@
 			isa = PBXGroup;
 			children = (
 				05A3FCB72C79389B007FBE31 /* NewWordView.swift */,
-				05A3FCBA2C7939A8007FBE31 /* WordViewModel.swift */,
+				055741DE2D60D3A800A35D4C /* ViewModels */,
 			);
 			path = AddWordView;
 			sourceTree = "<group>";
@@ -155,6 +167,8 @@
 			children = (
 				05FFB1502C77CC7F00F19D9D /* Word.swift */,
 				05FFB1522C77CDEB00F19D9D /* Category.swift */,
+				055741E12D612D7A00A35D4C /* PartOfSpeech.swift */,
+				055741E32D6131A100A35D4C /* PartOfSpeechDetails.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -259,6 +273,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				055741E42D6131A100A35D4C /* PartOfSpeechDetails.swift in Sources */,
 				05FFB1412C77CB6B00F19D9D /* MainView.swift in Sources */,
 				05FFB13F2C77CB6B00F19D9D /* DEWoerterbuchApp.swift in Sources */,
 				05FFB15D2C77DD0400F19D9D /* WordCellViewModel.swift in Sources */,
@@ -266,6 +281,7 @@
 				05A3FCAF2C792391007FBE31 /* DictionaryView.swift in Sources */,
 				05FFB1562C77CEF500F19D9D /* String.swift in Sources */,
 				05FFB1582C77DC3500F19D9D /* PrintExtensions.swift in Sources */,
+				055741E22D612D7A00A35D4C /* PartOfSpeech.swift in Sources */,
 				05FFB1512C77CC7F00F19D9D /* Word.swift in Sources */,
 				05FFB15B2C77DC9700F19D9D /* WordCellView.swift in Sources */,
 				05A3FCB82C79389B007FBE31 /* NewWordView.swift in Sources */,

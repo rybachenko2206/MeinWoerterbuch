@@ -9,7 +9,9 @@ import SwiftUI
 
 struct TrainerView: View {
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        Text("Unfortunately, this features aren't implemented yet!")
+            .multilineTextAlignment(.center)
+            .padding(.horizontal, 25)
     }
 }
 
