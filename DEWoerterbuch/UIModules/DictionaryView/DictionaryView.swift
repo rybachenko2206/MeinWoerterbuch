@@ -12,8 +12,8 @@ typealias DictionaryViewModel = MainView.DictionaryViewModel
 
 struct DictionaryView: View {
     @State private var showAddWordModalView = false
-    @ObservedObject var dictionaryViewModel: DictionaryViewModel
     
+    @ObservedObject var dictionaryViewModel: DictionaryViewModel
     
     var body: some View {
         NavigationStack(root: {
@@ -36,8 +36,10 @@ struct DictionaryView: View {
                 Button(action: addWord, label: {
                     Image(systemName: "plus")
                 })
-                .sheet(isPresented: $showAddWordModalView, content: {
-                    NewWordView(viewModel: dictionaryViewModel.getAddWordViewModel())
+                .fullScreenCover(isPresented: $showAddWordModalView, content: {
+                    NavigationStack(root: {
+                        NewWordView(viewModel: dictionaryViewModel.getAddWordViewModel())
+                    })
                 })
             })
             .onAppear(perform: {

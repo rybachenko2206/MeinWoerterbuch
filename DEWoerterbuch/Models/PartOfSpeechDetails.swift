@@ -12,7 +12,7 @@ struct PartOfSpeechDetails: Codable {
     var partOfSpeech: PartOfSpeech
     
     // For nouns: definite article & plural form
-    var article: String? // der, die, das
+    var article: Article = .notSelected
     var plural: String?
     
     // For verbs: conjugations
@@ -26,7 +26,7 @@ struct PartOfSpeechDetails: Codable {
     // MARK: - Init
     init(
         partOfSpeech: PartOfSpeech,
-        article: String? = nil,
+        article: Article? = nil,
         plural: String? = nil,
         praeteritum: String? = nil,
         partizip2: String? = nil,
@@ -34,7 +34,7 @@ struct PartOfSpeechDetails: Codable {
         superlativ: String? = nil
     ) {
         self.partOfSpeech = partOfSpeech
-        self.article = article
+        self.article = article ?? .notSelected
         self.plural = plural
         self.praeteritum = praeteritum
         self.partizip2 = partizip2
@@ -46,4 +46,20 @@ struct PartOfSpeechDetails: Codable {
 //        assert(partOfSpeech == .verb && praeteritum == nil && partizip2 == nil)
 //        assert(partOfSpeech == .adjective && komparativ == nil && superlativ == nil)
     }
+}
+
+enum Article: String, CaseIterable, Identifiable, Codable {
+    case notSelected
+    case der, die, das
+    
+    static var allCases: [Article] { [.der, .die, .das] }
+    
+    var description: String {
+        switch self {
+        case .notSelected: return "Select article"
+        default: return self.rawValue
+        }
+    }
+    
+    var id: Self { return self }
 }

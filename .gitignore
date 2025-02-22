@@ -29,6 +29,13 @@ playground.xcworkspace
 # hence it is not needed unless you have added a package configuration file to your project
 # .swiftpm
 
+# Xcode system files
+/build-request.json
+/description.msgpack
+/manifest.json
+/target-graph.txt
+/task-store.msgpack
+
 .build/
 
 # CocoaPods

@@ -8,6 +8,7 @@
 import Foundation
 import SwiftData
 
+@MainActor
 class MainViewModel: ObservableObject {
     private let dataStorage: PDataStorage
     

@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		055741E22D612D7A00A35D4C /* PartOfSpeech.swift in Sources */ = {isa = PBXBuildFile; fileRef = 055741E12D612D7A00A35D4C /* PartOfSpeech.swift */; };
 		055741E42D6131A100A35D4C /* PartOfSpeechDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 055741E32D6131A100A35D4C /* PartOfSpeechDetails.swift */; };
+		055741E62D6335E100A35D4C /* ExpandableTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 055741E52D6335E100A35D4C /* ExpandableTextView.swift */; };
+		055741E82D63C20900A35D4C /* SelectPartOfSpeechView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 055741E72D63C20900A35D4C /* SelectPartOfSpeechView.swift */; };
 		058D87A02C88B53000123033 /* DataStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 058D879F2C88B53000123033 /* DataStorage.swift */; };
 		059099102CA6C1D5006D5C18 /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0590990F2CA6C1D4006D5C18 /* MainViewModel.swift */; };
 		05A3FCAD2C792353007FBE31 /* DictionaryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05A3FCAC2C792353007FBE31 /* DictionaryViewModel.swift */; };
@@ -17,6 +19,7 @@
 		05A3FCB42C793552007FBE31 /* Array.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05A3FCB32C793552007FBE31 /* Array.swift */; };
 		05A3FCB82C79389B007FBE31 /* NewWordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05A3FCB72C79389B007FBE31 /* NewWordView.swift */; };
 		05A3FCBB2C7939A8007FBE31 /* WordViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05A3FCBA2C7939A8007FBE31 /* WordViewModel.swift */; };
+		05F8C91C2D66575D00A38B32 /* SelectArticleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05F8C91B2D66575D00A38B32 /* SelectArticleView.swift */; };
 		05FFB13F2C77CB6B00F19D9D /* DEWoerterbuchApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05FFB13E2C77CB6B00F19D9D /* DEWoerterbuchApp.swift */; };
 		05FFB1412C77CB6B00F19D9D /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05FFB1402C77CB6B00F19D9D /* MainView.swift */; };
 		05FFB1432C77CB6D00F19D9D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 05FFB1422C77CB6D00F19D9D /* Assets.xcassets */; };
@@ -32,6 +35,8 @@
 /* Begin PBXFileReference section */
 		055741E12D612D7A00A35D4C /* PartOfSpeech.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PartOfSpeech.swift; sourceTree = "<group>"; };
 		055741E32D6131A100A35D4C /* PartOfSpeechDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PartOfSpeechDetails.swift; sourceTree = "<group>"; };
+		055741E52D6335E100A35D4C /* ExpandableTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpandableTextView.swift; sourceTree = "<group>"; };
+		055741E72D63C20900A35D4C /* SelectPartOfSpeechView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectPartOfSpeechView.swift; sourceTree = "<group>"; };
 		058D879F2C88B53000123033 /* DataStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataStorage.swift; sourceTree = "<group>"; };
 		0590990F2CA6C1D4006D5C18 /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
 		05A3FCAC2C792353007FBE31 /* DictionaryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DictionaryViewModel.swift; sourceTree = "<group>"; };
@@ -40,6 +45,7 @@
 		05A3FCB32C793552007FBE31 /* Array.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Array.swift; sourceTree = "<group>"; };
 		05A3FCB72C79389B007FBE31 /* NewWordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewWordView.swift; sourceTree = "<group>"; };
 		05A3FCBA2C7939A8007FBE31 /* WordViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordViewModel.swift; sourceTree = "<group>"; };
+		05F8C91B2D66575D00A38B32 /* SelectArticleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectArticleView.swift; sourceTree = "<group>"; };
 		05FFB13B2C77CB6B00F19D9D /* DEWoerterbuch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DEWoerterbuch.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		05FFB13E2C77CB6B00F19D9D /* DEWoerterbuchApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DEWoerterbuchApp.swift; sourceTree = "<group>"; };
 		05FFB1402C77CB6B00F19D9D /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
@@ -103,6 +109,9 @@
 			isa = PBXGroup;
 			children = (
 				05A3FCB72C79389B007FBE31 /* NewWordView.swift */,
+				055741E72D63C20900A35D4C /* SelectPartOfSpeechView.swift */,
+				05F8C91B2D66575D00A38B32 /* SelectArticleView.swift */,
+				055741E52D6335E100A35D4C /* ExpandableTextView.swift */,
 				055741DE2D60D3A800A35D4C /* ViewModels */,
 			);
 			path = AddWordView;
@@ -131,7 +140,7 @@
 				05FFB1542C77CEE100F19D9D /* Extensions */,
 				058D879E2C88B51300123033 /* Services */,
 				05FFB14E2C77CC3A00F19D9D /* Models */,
-				05FFB14F2C77CC4800F19D9D /* Modules */,
+				05FFB14F2C77CC4800F19D9D /* UIModules */,
 				05FFB14D2C77CC0000F19D9D /* Resources */,
 				05FFB1442C77CB6D00F19D9D /* Preview Content */,
 			);
@@ -173,7 +182,7 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
-		05FFB14F2C77CC4800F19D9D /* Modules */ = {
+		05FFB14F2C77CC4800F19D9D /* UIModules */ = {
 			isa = PBXGroup;
 			children = (
 				05FFB1402C77CB6B00F19D9D /* MainView.swift */,
@@ -181,7 +190,7 @@
 				05A3FCAB2C792339007FBE31 /* DictionaryView */,
 				05A3FCB02C792FA8007FBE31 /* Trainer */,
 			);
-			path = Modules;
+			path = UIModules;
 			sourceTree = "<group>";
 		};
 		05FFB1542C77CEE100F19D9D /* Extensions */ = {
@@ -279,13 +288,16 @@
 				05FFB15D2C77DD0400F19D9D /* WordCellViewModel.swift in Sources */,
 				05A3FCAD2C792353007FBE31 /* DictionaryViewModel.swift in Sources */,
 				05A3FCAF2C792391007FBE31 /* DictionaryView.swift in Sources */,
+				05F8C91C2D66575D00A38B32 /* SelectArticleView.swift in Sources */,
 				05FFB1562C77CEF500F19D9D /* String.swift in Sources */,
 				05FFB1582C77DC3500F19D9D /* PrintExtensions.swift in Sources */,
+				055741E62D6335E100A35D4C /* ExpandableTextView.swift in Sources */,
 				055741E22D612D7A00A35D4C /* PartOfSpeech.swift in Sources */,
 				05FFB1512C77CC7F00F19D9D /* Word.swift in Sources */,
 				05FFB15B2C77DC9700F19D9D /* WordCellView.swift in Sources */,
 				05A3FCB82C79389B007FBE31 /* NewWordView.swift in Sources */,
 				05A3FCB42C793552007FBE31 /* Array.swift in Sources */,
+				055741E82D63C20900A35D4C /* SelectPartOfSpeechView.swift in Sources */,
 				05FFB1532C77CDEB00F19D9D /* Category.swift in Sources */,
 				058D87A02C88B53000123033 /* DataStorage.swift in Sources */,
 				05A3FCBB2C7939A8007FBE31 /* WordViewModel.swift in Sources */,
@@ -427,11 +439,13 @@
 				DEVELOPMENT_TEAM = UHJFHS6M7R;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.education";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -456,11 +470,13 @@
 				DEVELOPMENT_TEAM = UHJFHS6M7R;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.education";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

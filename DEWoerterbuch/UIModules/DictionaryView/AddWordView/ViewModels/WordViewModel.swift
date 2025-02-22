@@ -8,29 +8,61 @@
 import Foundation
 import Combine
 
+@MainActor
 class WordViewModel: ObservableObject {
     // MARK: - Properties
     private let word: Word?
     private var subscriptions: [AnyCancellable] = []
+    
+    private var partOfSpeechDetails: PartOfSpeechDetails
+    
+    @Published private(set) var isSaveButtonEnabled: Bool = true
+    
+    let saveButtonTitle: String = "Save"
     var title: String { "Add new word" }
     var valuePlaceholder: String { "new word" }
     var translationPlaceholder: String { "translation" }
     var addInfoPlaceholder: String { "additional info" }
+    var additionalInfoSectionHeader: String { "Additional Info" }
+    var partOfSpeechSectionHeader: String { "Part of speech" }
+    
+    var articlePlaceholder: String { "Select article" }
+    var pluralPlaceholder: String { "Set plural form" }
+    var praeteritumPlaceholder: String { "set präteritum" }
+    var partizip2Placeholder: String { "set partizip II" }
+    var komparativPlaceholder: String { "set komparativ" }
+    var superlativPlaceholder: String { "set superlativ" }
+    
+    @Published var partOfSpeech: PartOfSpeech
+    @Published var selectedArticle: Article
+    @Published var pluralForm: String
+    @Published var praeteritum: String
+    @Published var partizip2: String
+    @Published var komparativ: String
+    @Published var superlativ: String
     
     @Published var wordValue: String = ""
     @Published var translation: String = ""
     @Published var additionalInfo: String = ""
     @Published var additionalInfo2: String = ""
-    @Published var isSaveButtonEnabled: Bool = false
     
     var saveWordCompletion: ((Word) -> Void)?
     
     // MARK: - Init
-    init(word: Word?) {
+    init(word: Word? = nil) {
         self.word = word
         self.wordValue = word?.value ?? ""
         self.translation = word?.translation ?? ""
         self.additionalInfo = word?.additionalInfo ?? ""
+        self.partOfSpeechDetails = word?.partOfSpeechDetails ?? PartOfSpeechDetails(partOfSpeech: .notSelected)
+        
+        self.partOfSpeech = partOfSpeechDetails.partOfSpeech
+        self.selectedArticle = partOfSpeechDetails.article
+        self.pluralForm = partOfSpeechDetails.plural ?? ""
+        self.praeteritum = partOfSpeechDetails.praeteritum ?? ""
+        self.partizip2 = partOfSpeechDetails.partizip2 ?? ""
+        self.komparativ = partOfSpeechDetails.komparativ ?? ""
+        self.superlativ = partOfSpeechDetails.superlativ ?? ""
         
         setupBindings()
     }
@@ -46,6 +78,10 @@ class WordViewModel: ObservableObject {
             let newWord = Word(value: wordValue, translation: translation, additionalInfo: additionalInfo)
             saveWordCompletion?(newWord)
         }
+    }
+    
+    func saveAction() {
+        pl("save model or return?")
     }
     
     // MARK: - Private funcs
@@ -77,6 +113,13 @@ class WordViewModel: ObservableObject {
 }
 
 extension WordViewModel {
-    private static let wordPreview = Word(value: "aufräumen", translation: "to clean", additionalInfo: "trennbare verb")
+    private static let wordPreview = Word(
+        value: "aufräumen",
+        translation: "to clean",
+        partOfSpeechDetails: PartOfSpeechDetails(partOfSpeech: .verb, praeteritum: "räumte auf", partizip2: "aufgeräumt"),
+        additionalInfo: "trennbare verb"
+    )
+    
     static let previewVM = WordViewModel(word: wordPreview)
 }
+

@@ -7,7 +7,8 @@
 
 import Foundation
 
-class WordCellViewModel: ObservableObject, Identifiable {
+@MainActor
+class WordCellViewModel: ObservableObject, @preconcurrency Identifiable {
     // MARK: - Properties
     let word: Word
     

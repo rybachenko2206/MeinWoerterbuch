@@ -11,6 +11,7 @@ import Combine
 
 extension MainView {
     
+    @MainActor
     class DictionaryViewModel: ObservableObject {
         // MARK: - Properties
         private let dataStorage: PDataStorage
