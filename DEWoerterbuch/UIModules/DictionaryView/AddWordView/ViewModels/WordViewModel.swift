@@ -11,14 +11,14 @@ import Combine
 @MainActor
 class WordViewModel: ObservableObject {
     // MARK: - Properties
-    private let word: Word?
+    private let existingWord: Word?
     private var subscriptions: [AnyCancellable] = []
     
-    private var partOfSpeechDetails: PartOfSpeechDetails
+    private(set) var isEditingMode: Bool
     
     @Published private(set) var isSaveButtonEnabled: Bool = true
     
-    let saveButtonTitle: String = "Save"
+    var saveButtonTitle: String { "Save" }
     var title: String { "Add new word" }
     var valuePlaceholder: String { "new word" }
     var translationPlaceholder: String { "translation" }
@@ -30,14 +30,20 @@ class WordViewModel: ObservableObject {
     var pluralPlaceholder: String { "Set plural form" }
     var praeteritumPlaceholder: String { "set präteritum" }
     var partizip2Placeholder: String { "set partizip II" }
+    var requiresDativPlaceholder: String { "Requires Dativ?" }
+    var komparablePlaceholder: String { "Komparable?" }
     var komparativPlaceholder: String { "set komparativ" }
     var superlativPlaceholder: String { "set superlativ" }
+    
+    var areMainFieldsFilled: Bool { !wordValue.isBlank && !translation.isEmpty }
     
     @Published var partOfSpeech: PartOfSpeech
     @Published var selectedArticle: Article
     @Published var pluralForm: String
     @Published var praeteritum: String
     @Published var partizip2: String
+    @Published var requiresDativ: Bool
+    @Published var isKomparable: Bool
     @Published var komparativ: String
     @Published var superlativ: String
     
@@ -50,65 +56,111 @@ class WordViewModel: ObservableObject {
     
     // MARK: - Init
     init(word: Word? = nil) {
-        self.word = word
+        self.existingWord = word
+        self.isEditingMode = word != nil
         self.wordValue = word?.value ?? ""
         self.translation = word?.translation ?? ""
         self.additionalInfo = word?.additionalInfo ?? ""
-        self.partOfSpeechDetails = word?.partOfSpeechDetails ?? PartOfSpeechDetails(partOfSpeech: .notSelected)
         
-        self.partOfSpeech = partOfSpeechDetails.partOfSpeech
-        self.selectedArticle = partOfSpeechDetails.article
-        self.pluralForm = partOfSpeechDetails.plural ?? ""
-        self.praeteritum = partOfSpeechDetails.praeteritum ?? ""
-        self.partizip2 = partOfSpeechDetails.partizip2 ?? ""
-        self.komparativ = partOfSpeechDetails.komparativ ?? ""
-        self.superlativ = partOfSpeechDetails.superlativ ?? ""
+        self.partOfSpeech = word?.partOfSpeechDetails?.partOfSpeech ?? .notSelected
+        self.selectedArticle = word?.partOfSpeechDetails?.article ?? .notSelected
+        self.pluralForm = word?.partOfSpeechDetails?.plural ?? ""
+        self.praeteritum = word?.partOfSpeechDetails?.praeteritum ?? ""
+        self.partizip2 = word?.partOfSpeechDetails?.partizip2 ?? ""
+        self.requiresDativ = word?.partOfSpeechDetails?.requiresDativ ?? false
+        self.isKomparable = word?.partOfSpeechDetails?.komparable ?? false
+        self.komparativ = word?.partOfSpeechDetails?.komparativ ?? ""
+        self.superlativ = word?.partOfSpeechDetails?.superlativ ?? ""
         
         setupBindings()
     }
     
     // MARK: - Public funcs
     func saveButtonTapped() {
-        if let word {
-            word.value = wordValue
-            word.translation = translation
-            word.additionalInfo = additionalInfo
-            saveWordCompletion?(word)
+        let word: Word
+        
+        if let existingWord {
+            word = existingWord
         } else {
-            let newWord = Word(value: wordValue, translation: translation, additionalInfo: additionalInfo)
-            saveWordCompletion?(newWord)
+            word = Word(value: wordValue, translation: translation, additionalInfo: additionalInfo)
         }
-    }
-    
-    func saveAction() {
-        pl("save model or return?")
+        
+        let newDetails = PartOfSpeechDetails(partOfSpeech: partOfSpeech, article: selectedArticle, plural: pluralForm, praeteritum: praeteritum, partizip2: partizip2, requiresDativ: requiresDativ, komparativ: komparativ, superlativ: superlativ)
+        
+        if arePartOfSpeechDetailsChanged() {
+            word.partOfSpeechDetails = newDetails
+        }
+        
+        saveWordCompletion?(word)
     }
     
     // MARK: - Private funcs
     private func setupBindings() {
-        $wordValue.sink(receiveValue: { [weak self] _ in
-            self?.handleWordOrTranslationValueChanged()
-        })
-        .store(in: &subscriptions)
-        
-        $translation.sink(receiveValue: { [weak self] _ in
-            self?.handleWordOrTranslationValueChanged()
-        })
-        .store(in: &subscriptions)
+        bindFieldsToSaveButtonEnabled()
+        bindPartOfSpeechChanged()
     }
     
-    private func handleWordOrTranslationValueChanged() {
-        let isFilled = !wordValue.isBlank && !translation.isEmpty
+    private func bindFieldsToSaveButtonEnabled() {
+        Publishers
+            .CombineLatest4($wordValue, $translation, $additionalInfo, $partOfSpeech)
+            .receive(on: DispatchQueue.main)
+            .map({ (wordStr: String, translation: String, additionalInfo: String, partOfSpeech: PartOfSpeech) in
+                if self.existingWord != nil {
+                    return self.areMainFieldsFilled && self.areFieldsChanged()
+                } else {
+                    return self.areMainFieldsFilled
+                }
+            })
+            .assign(to: \.isSaveButtonEnabled, on: self)
+            .store(in: &subscriptions)
+    }
+    
+    private func bindPartOfSpeechChanged() {
+        $partOfSpeech
+            .removeDuplicates()
+            .receive(on: DispatchQueue.main)
+            .sink(receiveValue: { [weak self] _ in
+                self?.selectedArticle = .notSelected
+                self?.pluralForm = ""
+                self?.partizip2 = ""
+                self?.praeteritum = ""
+                self?.requiresDativ = false
+                self?.komparativ = ""
+                self?.superlativ = ""
+            })
+            .store(in: &subscriptions)
+    }
+    
+    private func arePartOfSpeechDetailsChanged() -> Bool {
+        guard let partOfSpeechDetails = existingWord?.partOfSpeechDetails else { return true }
         
-        let isChanged: Bool
-        if let word {
-            let translationChanged = word.translation != translation
-            isChanged = word.value != wordValue || translationChanged || word.additionalInfo != additionalInfo
-        } else {
-            isChanged = true
+        if partOfSpeechDetails.partOfSpeech != partOfSpeech {
+            return true
         }
         
-        isSaveButtonEnabled = isFilled && isChanged
+        if let article = partOfSpeechDetails.article, article != selectedArticle {
+            return true
+        }
+        
+        if (!pluralForm.isBlank && pluralForm != partOfSpeechDetails.plural ?? "") ||
+            (!praeteritum.isBlank && praeteritum != partOfSpeechDetails.praeteritum ?? "") ||
+            (!partizip2.isBlank && partizip2 != partOfSpeechDetails.partizip2) ||
+            (!komparativ.isBlank && komparativ != partOfSpeechDetails.komparativ ?? "") ||
+            (!superlativ.isBlank && superlativ != partOfSpeechDetails.superlativ ?? "")
+        {
+            return true
+        } else {
+            return false
+        }
+    }
+    
+    private func areFieldsChanged() -> Bool {
+        guard let word = existingWord else { return true }
+        
+        return word.value != wordValue ||
+        word.translation != translation ||
+        word.additionalInfo != additionalInfo ||
+        arePartOfSpeechDetailsChanged()
     }
 }
 

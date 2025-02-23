@@ -19,45 +19,57 @@ struct NewWordView: View {
     
     // MARK: - Body
     var body: some View {
-        NavigationView {
-            List(content: {
-                firstSeection()
-                additionalInfoSection()
-                partOfSpeechSection()
-                partOfSpeechDetalisSection()
-                mainButtonSection()
-            })
+        if viewModel.isEditingMode {
+            listContent()
             .navigationTitle(viewModel.title)
             .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
-                toolbarContent()
-                keyboardToolbarContent()
-            }
-            .sheet(item: $activeSheet, content: { item in
-                switch item {
-                case .selectPartOfSpeech:
-                    partOfSpeechSheet()
-                case .selectArticle:
-                    selectArticleSheet()
+            
+        } else {
+            NavigationView {
+                listContent()
+                .navigationTitle(viewModel.title)
+                .navigationBarTitleDisplayMode(.inline)
+                .toolbar {
+                    toolbarContent()
+                    keyboardToolbarContent()
                 }
-            })
-
+            }
         }
     }
     
-    // MARK: - ViewBuilder funds
-    @ViewBuilder
+    // MARK: - Some View funcs
+    private func listContent() -> some View {
+        List(content: {
+            firstSeection()
+            additionalInfoSection()
+            partOfSpeechSection()
+            partOfSpeechDetalisSection()
+            mainButtonSection()
+        })
+        .sheet(item: $activeSheet, content: { item in
+            switch item {
+            case .selectPartOfSpeech:
+                partOfSpeechSheet()
+            case .selectArticle:
+                selectArticleSheet()
+            }
+        })
+    }
+    
     private func firstSeection() -> some View {
         Section(content: {
             TextField(viewModel.valuePlaceholder, text: $viewModel.wordValue)
                 .font(.headline)
                 .focused($focusedField, equals: .word)
+                .textInputAutocapitalization(.never)
+                .keyboardType(.default)
             TextField(viewModel.translationPlaceholder, text: $viewModel.translation)
                 .focused($focusedField, equals: .translation)
+                .textInputAutocapitalization(.never)
+                .keyboardType(.default)
         })
     }
     
-    @ViewBuilder
     private func additionalInfoSection() -> some View {
         Section(content: {
             ExpandableTextView(viewModel.addInfoPlaceholder, text: $viewModel.additionalInfo)
@@ -67,30 +79,20 @@ struct NewWordView: View {
         })
     }
     
-    @ViewBuilder
     private func partOfSpeechSection() -> some View {
         Section(content: {
             Button(action: {
                 activeSheet = .selectPartOfSpeech
             }, label: {
-                HStack(content: {
-                    Text(viewModel.partOfSpeech.description)
-                        .font(.title2)
-                        .foregroundColor(.black)
-                    
-                    if viewModel.partOfSpeech != .notSelected {
-                        Spacer()
-                        
-                        Text("part of speech")
-                            .font(.system(size: 16, weight: .thin))
-                            .foregroundColor(.secondary)
-                    }
-                })
+                Text(viewModel.partOfSpeech.description)
+                    .font(.title2)
+                    .foregroundColor(.black)
             })
+        }, header: {
+            Text("part of speech")
         })
     }
     
-    @ViewBuilder
     private func partOfSpeechDetalisSection() -> some View {
         Section(content: {
             switch viewModel.partOfSpeech {
@@ -116,23 +118,38 @@ struct NewWordView: View {
                 TextField(viewModel.pluralPlaceholder, text: $viewModel.pluralForm)
                         .font(.title3)
                         .focused($focusedField, equals: .nomenPlural)
+                        .textInputAutocapitalization(.never)
+                        .keyboardType(.default)
                 
             case .verb:
                 TextField(viewModel.praeteritumPlaceholder, text: $viewModel.praeteritum)
                     .font(.title3)
                     .focused($focusedField, equals: .praeteritum)
+                    .textInputAutocapitalization(.never)
+                    .keyboardType(.default)
                 TextField(viewModel.partizip2Placeholder, text: $viewModel.partizip2)
                     .font(.title3)
                     .focused($focusedField, equals: .partizip2)
+                    .textInputAutocapitalization(.never)
+                    .keyboardType(.default)
+                Toggle(viewModel.requiresDativPlaceholder, isOn: $viewModel.requiresDativ)
                 
             case .adjective,
                     .adverb:
-                TextField(viewModel.komparativPlaceholder, text: $viewModel.komparativ)
-                    .font(.title3)
-                    .focused($focusedField, equals: .komparativ)
-                TextField(viewModel.superlativPlaceholder, text: $viewModel.superlativ)
-                    .font(.title3)
-                    .focused($focusedField, equals: .superlativ)
+                Toggle(viewModel.komparablePlaceholder, isOn: $viewModel.isKomparable)
+                
+                if viewModel.isKomparable {
+                    TextField(viewModel.komparativPlaceholder, text: $viewModel.komparativ)
+                        .font(.title3)
+                        .focused($focusedField, equals: .komparativ)
+                        .textInputAutocapitalization(.never)
+                        .keyboardType(.default)
+                    TextField(viewModel.superlativPlaceholder, text: $viewModel.superlativ)
+                        .font(.title3)
+                        .focused($focusedField, equals: .superlativ)
+                        .textInputAutocapitalization(.never)
+                        .keyboardType(.default)
+                }
                 
             default:
                 EmptyView()
@@ -140,13 +157,12 @@ struct NewWordView: View {
         })
     }
     
-    @ViewBuilder
     private func mainButtonSection() -> some View {
         Section(content: {
             EmptyView()
         }, footer: {
             Button(viewModel.saveButtonTitle, action: {
-                viewModel.saveAction()
+                viewModel.saveButtonTapped()
                 dismiss()
             })
             .buttonStyle(MainButton.style)
@@ -157,12 +173,10 @@ struct NewWordView: View {
     }
     
     // MARK: Sheets
-    @ViewBuilder
     private func partOfSpeechSheet() -> some View {
         SelectPartOfSpeechView(selectedPartOfSpeech: $viewModel.partOfSpeech)
     }
     
-    @ViewBuilder
     private func selectArticleSheet() -> some View {
         SelectArticleView(article: $viewModel.selectedArticle)
             .presentationDetents([.fraction(0.35)])
