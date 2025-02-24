@@ -17,42 +17,58 @@ struct DictionaryView: View {
     
     var body: some View {
         NavigationStack(root: {
-            List(content: {
-                ForEach(dictionaryViewModel.wordCellViewModels, content: { cellVm in
-                    NavigationLink(destination: {
-                        NewWordView(viewModel: cellVm.getEditWordViewModel())
-                    }, label: {
-                        WordCellView(viewModel: cellVm)
-                    })
+            listContent
+                .navigationTitle(dictionaryViewModel.title)
+                .toolbar(content: {
+                    toolbarContent
                 })
-                .onDelete(perform: { indexSet in
-                    Task {
-                        await dictionaryViewModel.deleteWords(in: indexSet)
-                    }
+                .onAppear(perform: {
+                    fetchData()
                 })
-            })
-            .navigationTitle("Dictionary")
-            .toolbar(content: {
-                Button(action: addWord, label: {
-                    Image(systemName: "plus")
-                })
-                .fullScreenCover(isPresented: $showAddWordModalView, content: {
-                    NavigationStack(root: {
-                        NewWordView(viewModel: dictionaryViewModel.getAddWordViewModel())
-                    })
+        })
+    }
+    
+    // MARK: - Views
+    private var listContent: some View {
+        List(content: {
+            ForEach(dictionaryViewModel.wordCellViewModels, content: { cellVm in
+                NavigationLink(destination: {
+                    NewWordView(viewModel: cellVm.getEditWordViewModel())
+                }, label: {
+                    WordCellView(viewModel: cellVm)
                 })
             })
-            .onAppear(perform: {
+            .onDelete(perform: { indexSet in
                 Task {
-                    await dictionaryViewModel.fetchData()
+                    await dictionaryViewModel.deleteWords(in: indexSet)
                 }
+            })
+        })
+        
+    }
+    
+    private var toolbarContent: some View {
+        Button(action: addWord, label: {
+            Image(systemName: "plus")
+        })
+        .fullScreenCover(isPresented: $showAddWordModalView, content: {
+            NavigationStack(root: {
+                NewWordView(viewModel: dictionaryViewModel.getAddWordViewModel())
             })
         })
     }
     
+    // MARK: - Private funcs
+    
     // MARK: - Actions
     private func addWord() {
         showAddWordModalView = true
+    }
+    
+    private func fetchData() {
+        Task {
+            await dictionaryViewModel.fetchData()
+        }
     }
 }
 

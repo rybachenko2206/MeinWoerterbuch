@@ -18,6 +18,8 @@ extension MainView {
         @Published private(set) var wordCellViewModels: [WordCellViewModel] = []
         private var subscriptions: Set<AnyCancellable> = []
         
+        let title: String = "Dictionary"
+        
         // MARK: - Init
         init(dataStorage: PDataStorage) {
             self.dataStorage = dataStorage
