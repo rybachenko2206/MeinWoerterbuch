@@ -10,32 +10,16 @@ import Foundation
 struct PartOfSpeechDetails: Codable {
     // MARK: - Properties
     var partOfSpeech: PartOfSpeech
-    
-    // For nouns: definite article & plural form
-    var article: Article?
-    var plural: String?
-    
-    // For verbs: conjugations
-    var praeteritum: String?
-    var partizip2: String?
-    var requiresDativ: Bool?
-    
-    // For adjectives: comparative & superlative
-    var komparable: Bool?
-    var komparativ: String?
-    var superlativ: String?
+    var nounDetails: NounDetails?
+    var verbDetails: VerbDetails?
+    var adjectiveDetails: AdjectiveDetails?
     
     // MARK: - Init
     init?(
         partOfSpeech: PartOfSpeech,
-        article: Article? = nil,
-        plural: String? = nil,
-        praeteritum: String? = nil,
-        partizip2: String? = nil,
-        requiresDativ: Bool? = nil,
-        isKomparable: Bool? = nil,
-        komparativ: String? = nil,
-        superlativ: String? = nil
+        nounDetails: NounDetails?,
+        verbDetails: VerbDetails?,
+        adjectiveDetails: AdjectiveDetails?
     ) {
         self.partOfSpeech = partOfSpeech
         
@@ -43,17 +27,12 @@ struct PartOfSpeechDetails: Codable {
         case .notSelected:
             return nil
         case .noun:
-            self.article = article
-            self.plural = plural
+            self.nounDetails = nounDetails
         case .verb:
-            self.praeteritum = praeteritum
-            self.partizip2 = partizip2
-            self.requiresDativ = requiresDativ
+            self.verbDetails = verbDetails
         case .adjective,
                 .adverb:
-            self.komparable = isKomparable
-            self.komparativ = komparativ
-            self.superlativ = superlativ
+            self.adjectiveDetails = adjectiveDetails
         default:
             break
         }
@@ -62,27 +41,39 @@ struct PartOfSpeechDetails: Codable {
     func isEmpty() -> Bool {
         guard partOfSpeech != .notSelected else { return true }
         
-        if let article, article != .notSelected {
+        if let article = nounDetails?.article, article != .notSelected {
             return false
         }
         
-        if let plural, !plural.isBlank {
+        if let plural = nounDetails?.plural, !plural.isBlank {
             return false
         }
         
-        if let praeteritum, !praeteritum.isBlank {
+        if let praeteritum = verbDetails?.praeteritum, !praeteritum.isBlank {
             return false
         }
         
-        if let partizip2, !partizip2.isBlank {
+        if let partizip2 = verbDetails?.partizip2, !partizip2.isBlank {
             return false
         }
         
-        if let komparativ, !komparativ.isBlank {
+        if let requiresDativ = verbDetails?.requiresDativ {
             return false
         }
         
-        if let superlativ, !superlativ.isBlank {
+        if let takesSein = verbDetails?.takesSein {
+            return false
+        }
+        
+        if let isComparable = adjectiveDetails?.isComparable {
+            return false
+        }
+        
+        if let komparativ = adjectiveDetails?.komparativ, !komparativ.isBlank {
+            return false
+        }
+        
+        if let superlativ = adjectiveDetails?.superlativ, !superlativ.isBlank {
             return false
         }
         
@@ -104,4 +95,22 @@ enum Article: String, CaseIterable, Identifiable, Codable {
     }
     
     var id: Self { return self }
+}
+
+struct NounDetails: Codable {
+    var article: Article?
+    var plural: String?
+}
+
+struct VerbDetails: Codable {
+    var praeteritum: String?
+    var partizip2: String?
+    var requiresDativ: Bool?
+    var takesSein: Bool?
+}
+
+struct AdjectiveDetails: Codable {
+    var isComparable: Bool?
+    var komparativ: String?
+    var superlativ: String?
 }
