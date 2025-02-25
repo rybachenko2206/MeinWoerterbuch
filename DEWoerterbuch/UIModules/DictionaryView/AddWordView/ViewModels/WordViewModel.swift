@@ -37,6 +37,8 @@ class WordViewModel: ObservableObject {
     
     var areMainFieldsFilled: Bool { !wordValue.isBlank && !translation.isEmpty }
     
+    // TODO: Add bool value var takesSein for Toggle in the view
+    
     @Published var partOfSpeech: PartOfSpeech
     @Published var selectedArticle: Article
     @Published var pluralForm: String
@@ -81,6 +83,9 @@ class WordViewModel: ObservableObject {
         
         if let existingWord {
             word = existingWord
+            word.value = wordValue
+            word.translation = translation
+            word.additionalInfo = additionalInfo
         } else {
             word = Word(value: wordValue, translation: translation, additionalInfo: additionalInfo)
         }

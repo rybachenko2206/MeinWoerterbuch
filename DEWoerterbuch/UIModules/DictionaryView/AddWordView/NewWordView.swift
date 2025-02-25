@@ -74,6 +74,7 @@ struct NewWordView: View {
         Section(content: {
             ExpandableTextView(viewModel.addInfoPlaceholder, text: $viewModel.additionalInfo)
                 .frame(minHeight: 80)
+                .focused($focusedField, equals: .additionalInfo)
         }, header: {
             Text("Additional info")
         })

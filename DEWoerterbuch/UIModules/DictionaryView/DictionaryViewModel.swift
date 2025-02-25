@@ -20,6 +20,25 @@ extension MainView {
         
         let title: String = "Dictionary"
         
+        @Published var searchText: String = ""
+        
+        var filtereWordViewModels: [WordCellViewModel] {
+            guard !searchText.isEmpty else { return wordCellViewModels }
+            
+            let wordResults = wordCellViewModels.filter({
+                $0.word.value.lowercased().contains(searchText.lowercased())
+            })
+            
+            let translationResults = wordCellViewModels.filter({
+                $0.word.translation.lowercased().contains(searchText.lowercased())
+            })
+            
+            // TODO: add search in partOfSpeech
+            
+            // FIXME: awoid duplicates
+            return wordResults + translationResults
+        }
+        
         // MARK: - Init
         init(dataStorage: PDataStorage) {
             self.dataStorage = dataStorage

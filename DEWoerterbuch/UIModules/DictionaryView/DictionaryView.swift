@@ -19,6 +19,7 @@ struct DictionaryView: View {
         NavigationStack(root: {
             listContent
                 .navigationTitle(dictionaryViewModel.title)
+                .searchable(text: $dictionaryViewModel.searchText)
                 .toolbar(content: {
                     toolbarContent
                 })
@@ -31,7 +32,7 @@ struct DictionaryView: View {
     // MARK: - Views
     private var listContent: some View {
         List(content: {
-            ForEach(dictionaryViewModel.wordCellViewModels, content: { cellVm in
+            ForEach(dictionaryViewModel.filtereWordViewModels, content: { cellVm in
                 NavigationLink(destination: {
                     NewWordView(viewModel: cellVm.getEditWordViewModel())
                 }, label: {

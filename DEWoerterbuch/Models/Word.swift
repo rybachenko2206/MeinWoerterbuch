@@ -46,6 +46,7 @@ class Word {
         self.wordId = UUID().uuidString
         self.value = value
         self.translation = translation
+        self.partOfSpeechDetails = partOfSpeechDetails
         self.additionalInfo = additionalInfo
         self.additionalInfo2 = ""
         self.learningProgress = learningProgress
