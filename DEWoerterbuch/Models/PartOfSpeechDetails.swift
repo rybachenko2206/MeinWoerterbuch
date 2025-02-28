@@ -9,18 +9,20 @@ import Foundation
 
 struct PartOfSpeechDetails: Codable {
     // MARK: - Properties
-    var partOfSpeech: PartOfSpeech
-    var nounDetails: NounDetails?
-    var verbDetails: VerbDetails?
-    var adjectiveDetails: AdjectiveDetails?
+    private(set) var partOfSpeech: PartOfSpeech
+    private(set) var nounDetails: NounDetails?
+    private(set) var verbDetails: VerbDetails?
+    private(set) var adjectiveDetails: AdjectiveDetails?
     
     // MARK: - Init
     init?(
         partOfSpeech: PartOfSpeech,
-        nounDetails: NounDetails?,
-        verbDetails: VerbDetails?,
-        adjectiveDetails: AdjectiveDetails?
+        nounDetails: NounDetails? = nil,
+        verbDetails: VerbDetails? = nil,
+        adjectiveDetails: AdjectiveDetails? = nil
     ) {
+        guard partOfSpeech != .notSelected else { return nil }
+        
         self.partOfSpeech = partOfSpeech
         
         switch partOfSpeech {
@@ -38,42 +40,11 @@ struct PartOfSpeechDetails: Codable {
         }
     }
     
+    // MARK: - Public funcs
     func isEmpty() -> Bool {
         guard partOfSpeech != .notSelected else { return true }
         
-        if let article = nounDetails?.article, article != .notSelected {
-            return false
-        }
-        
-        if let plural = nounDetails?.plural, !plural.isBlank {
-            return false
-        }
-        
-        if let praeteritum = verbDetails?.praeteritum, !praeteritum.isBlank {
-            return false
-        }
-        
-        if let partizip2 = verbDetails?.partizip2, !partizip2.isBlank {
-            return false
-        }
-        
-        if let requiresDativ = verbDetails?.requiresDativ {
-            return false
-        }
-        
-        if let takesSein = verbDetails?.takesSein {
-            return false
-        }
-        
-        if let isComparable = adjectiveDetails?.isComparable {
-            return false
-        }
-        
-        if let komparativ = adjectiveDetails?.komparativ, !komparativ.isBlank {
-            return false
-        }
-        
-        if let superlativ = adjectiveDetails?.superlativ, !superlativ.isBlank {
+        if nounDetails != nil || verbDetails != nil || adjectiveDetails != nil {
             return false
         }
         
@@ -98,19 +69,49 @@ enum Article: String, CaseIterable, Identifiable, Codable {
 }
 
 struct NounDetails: Codable {
-    var article: Article?
-    var plural: String?
+    private(set) var article: Article?
+    private(set) var plural: String?
+    
+    init?(article: Article? = nil, plural: String? = nil) {
+        if (article == nil || article == .notSelected) && plural.isNilOrEmpty {
+            return nil
+        }
+        
+        self.article = article
+        self.plural = plural
+    }
 }
 
 struct VerbDetails: Codable {
-    var praeteritum: String?
-    var partizip2: String?
-    var requiresDativ: Bool?
-    var takesSein: Bool?
+    private(set) var praeteritum: String?
+    private(set) var partizip2: String?
+    private(set) var requiresDativ: Bool?
+    private(set) var takesSein: Bool?
+    
+    init?(praeteritum: String? = nil, partizip2: String? = nil, requiresDativ: Bool? = nil, takesSein: Bool? = nil) {
+        if praeteritum == nil && partizip2 == nil && requiresDativ == nil && takesSein == nil {
+            return nil
+        }
+        
+        self.praeteritum = praeteritum
+        self.partizip2 = partizip2
+        self.requiresDativ = requiresDativ
+        self.takesSein = takesSein
+    }
 }
 
 struct AdjectiveDetails: Codable {
-    var isComparable: Bool?
-    var komparativ: String?
-    var superlativ: String?
+    private(set) var isComparable: Bool?
+    private(set) var komparativ: String?
+    private(set) var superlativ: String?
+    
+    init?(isComparable: Bool? = nil, komparativ: String? = nil, superlativ: String? = nil) {
+        if isComparable == nil && komparativ == nil && superlativ == nil {
+            return nil
+        }
+        
+        self.isComparable = isComparable
+        self.komparativ = komparativ
+        self.superlativ = superlativ
+    }
 }

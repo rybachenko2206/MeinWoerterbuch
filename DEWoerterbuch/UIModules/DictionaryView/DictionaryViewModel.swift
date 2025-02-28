@@ -15,15 +15,19 @@ extension MainView {
     class DictionaryViewModel: ObservableObject {
         // MARK: - Properties
         private let dataStorage: PDataStorage
-        @Published private(set) var wordCellViewModels: [WordCellViewModel] = []
+        
         private var subscriptions: Set<AnyCancellable> = []
+        
+        @Published private(set) var wordCellViewModels: [WordCellViewModel] = []
         
         let title: String = "Dictionary"
         
         @Published var searchText: String = ""
         
+        var isSearching: Bool { !searchText.isEmpty }
+        
         var filtereWordViewModels: [WordCellViewModel] {
-            guard !searchText.isEmpty else { return wordCellViewModels }
+            guard isSearching else { return wordCellViewModels }
             
             let wordResults = wordCellViewModels.filter({
                 $0.word.value.lowercased().contains(searchText.lowercased())

@@ -39,9 +39,9 @@ class Word {
     init(
         value: String,
         translation: String,
-        partOfSpeechDetails: PartOfSpeechDetails? = nil,
         additionalInfo: String = "",
-        learningProgress: Int = 0
+        learningProgress: Int = 0,
+        partOfSpeechDetails: PartOfSpeechDetails? = nil
     ) {
         self.wordId = UUID().uuidString
         self.value = value

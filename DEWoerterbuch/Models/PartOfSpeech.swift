@@ -28,17 +28,35 @@ enum PartOfSpeech: String, CaseIterable, Codable {
     var description: String {
         switch self {
         case .notSelected: return "Select part of speech"
-        case .noun: return "Nomen (Іменник)"
-        case .verb: return "Verb (Дієслово)"
-        case .adjective: return "Adjektiv (Прикметник)"
-        case .adverb: return "Adverb (Прислівник)"
-        case .pronoun: return "Pronomen (Займенник)"
-        case .preposition: return "Präposition (Прийменник)"
-        case .conjunction: return "Konjunktion (Сполучник)"
-        case .particle: return "Partikel (Частка)"
-        case .interjection: return "Interjektion (Вигук)"
-        case .numerale: return "Numerale (Числівник)"
-        case .phrase: return "Phrase (Фраза)"
+        case .noun: return "Nomen"
+        case .verb: return "Verb"
+        case .adjective: return "Adjektiv"
+        case .adverb: return "Adverb"
+        case .pronoun: return "Pronomen"
+        case .preposition: return "Präposition"
+        case .conjunction: return "Konjunktion"
+        case .particle: return "Partikel"
+        case .interjection: return "Interjektion"
+        case .numerale: return "Numerale"
+        case .phrase: return "Phrase"
+        }
+    }
+    
+    var uaDescription: String? {
+        // TODO: Think about getting this value using localization.
+        switch self {
+        case .notSelected: return nil
+        case .noun: return "Іменник"
+        case .verb: return "Дієслово"
+        case .adjective: return "Прикметник"
+        case .adverb: return "Прислівник"
+        case .pronoun: return "Займенник"
+        case .preposition: return "Прийменник"
+        case .conjunction: return "Сполучник"
+        case .particle: return "Частка"
+        case .interjection: return "Вигук"
+        case .numerale: return "Числівник"
+        case .phrase: return "Фраза"
         }
     }
     

@@ -23,9 +23,13 @@ struct NewWordView: View {
             listContent()
             .navigationTitle(viewModel.title)
             .navigationBarTitleDisplayMode(.inline)
+            .onAppear {
+                // FIXME: clarify about this problem. details entities, which are stored in partOfSpeechDetails, are not set correctly in the viewModel
+                viewModel.setupRepeatedlyPartOfSpeechDetails()
+            }
             
         } else {
-            NavigationView {
+            NavigationStack {
                 listContent()
                 .navigationTitle(viewModel.title)
                 .navigationBarTitleDisplayMode(.inline)
@@ -98,64 +102,90 @@ struct NewWordView: View {
         Section(content: {
             switch viewModel.partOfSpeech {
             case .noun:
-                Button(action: {
-                    activeSheet = .selectArticle
-                }, label: {
-                    HStack(content: {
-                        Text(viewModel.selectedArticle.description)
-                            .font(.title3)
-                            .foregroundColor(.black)
-                        
-                        if viewModel.selectedArticle != .notSelected {
-                            Spacer()
-                            
-                            Text("Article")
-                                .font(.system(size: 16, weight: .thin))
-                                .foregroundColor(.secondary)
-                        }
-                    })
-                })
-                
-                TextField(viewModel.pluralPlaceholder, text: $viewModel.pluralForm)
-                        .font(.title3)
-                        .focused($focusedField, equals: .nomenPlural)
-                        .textInputAutocapitalization(.never)
-                        .keyboardType(.default)
-                
+                nounInputFields()
             case .verb:
-                TextField(viewModel.praeteritumPlaceholder, text: $viewModel.praeteritum)
-                    .font(.title3)
-                    .focused($focusedField, equals: .praeteritum)
-                    .textInputAutocapitalization(.never)
-                    .keyboardType(.default)
-                TextField(viewModel.partizip2Placeholder, text: $viewModel.partizip2)
-                    .font(.title3)
-                    .focused($focusedField, equals: .partizip2)
-                    .textInputAutocapitalization(.never)
-                    .keyboardType(.default)
-                Toggle(viewModel.requiresDativPlaceholder, isOn: $viewModel.requiresDativ)
-                
+                verbInputFields()
             case .adjective,
                     .adverb:
-                Toggle(viewModel.komparablePlaceholder, isOn: $viewModel.isKomparable)
-                
-                if viewModel.isKomparable {
-                    TextField(viewModel.komparativPlaceholder, text: $viewModel.komparativ)
-                        .font(.title3)
-                        .focused($focusedField, equals: .komparativ)
-                        .textInputAutocapitalization(.never)
-                        .keyboardType(.default)
-                    TextField(viewModel.superlativPlaceholder, text: $viewModel.superlativ)
-                        .font(.title3)
-                        .focused($focusedField, equals: .superlativ)
-                        .textInputAutocapitalization(.never)
-                        .keyboardType(.default)
-                }
-                
+                adjectiveInputFields()
             default:
                 EmptyView()
             }
         })
+    }
+    
+    @ViewBuilder
+    private func nounInputFields() -> some View {
+        Button(action: {
+            activeSheet = .selectArticle
+        }, label: {
+            HStack(content: {
+                Text(viewModel.selectedArticle.description)
+                    .font(.title3)
+                    .foregroundColor(.black)
+                
+                if viewModel.selectedArticle != .notSelected {
+                    Spacer()
+                    
+                    Text("Article")
+                        .font(.system(size: 16, weight: .thin))
+                        .foregroundColor(.secondary)
+                }
+            })
+        })
+        
+        TextField(viewModel.pluralPlaceholder, text: $viewModel.pluralForm)
+                .font(.title3)
+                .focused($focusedField, equals: .nomenPlural)
+                .textInputAutocapitalization(.never)
+                .keyboardType(.default)
+    }
+    
+    @ViewBuilder
+    private func verbInputFields() -> some View {
+        TextField(viewModel.praeteritumPlaceholder, text: $viewModel.praeteritum)
+            .font(.title3)
+            .focused($focusedField, equals: .praeteritum)
+            .textInputAutocapitalization(.never)
+            .keyboardType(.default)
+        
+        TextField(viewModel.partizip2Placeholder, text: $viewModel.partizip2)
+            .font(.title3)
+            .focused($focusedField, equals: .partizip2)
+            .textInputAutocapitalization(.never)
+            .keyboardType(.default)
+        
+        Toggle(viewModel.requiresDativCaption, isOn: Binding(
+            get: { viewModel.requiresDativ ?? false },
+            set: { viewModel.requiresDativ = $0 }
+        ))
+        
+        Toggle(viewModel.takesSeinCaption, isOn: Binding(
+            get: { viewModel.takesSein ?? false },
+            set: { viewModel.takesSein = $0 }
+        ))
+    }
+    
+    @ViewBuilder
+    private func adjectiveInputFields() -> some View {
+        Toggle(viewModel.komparablePlaceholder, isOn: Binding(
+            get: { viewModel.isComparable ?? false },
+            set: { viewModel.isComparable = $0 }
+        ))
+        
+        if viewModel.isComparable == true {
+            TextField(viewModel.komparativPlaceholder, text: $viewModel.komparativ)
+                .font(.title3)
+                .focused($focusedField, equals: .komparativ)
+                .textInputAutocapitalization(.never)
+                .keyboardType(.default)
+            
+            TextField(viewModel.superlativPlaceholder, text: $viewModel.superlativ)
+                .font(.title3)
+                .focused($focusedField, equals: .superlativ)
+                .textInputAutocapitalization(.never)
+                .keyboardType(.default)
+        }
     }
     
     private func mainButtonSection() -> some View {

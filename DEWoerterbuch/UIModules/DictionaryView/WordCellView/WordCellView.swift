@@ -8,49 +8,79 @@
 import SwiftUI
 
 struct WordCellView: View {
+    // MARK: - Properties
     var viewModel: WordCellViewModel
     
+    // MARK: - Body
     var body: some View {
         VStack(alignment: .leading, content: {
-            // Word
-            HStack(spacing: 3, content: {
-                if let article = viewModel.article {
-                    Text(article)
-                        .font(.system(size: 19, weight: .regular))
-                        .foregroundColor(.primary)
-                }
-                
-                Text(viewModel.value)
-                    .font(.system(size: 19, weight: .semibold))
-                    .foregroundColor(.primary)
-            })
-            
-            // Plural form of .noun
-            if let pluralForm = viewModel.pluralForm {
-                Text(pluralForm)
-                    .font(.system(size: 17, weight: .medium))
+            wordRow
+            pluralFormRow
+            comparableOrPastFormsRow
+            translationRow
+            summaryRow
+        })
+    }
+    
+    // MARK: - some View {
+    var wordRow: some View {
+        HStack(spacing: 3, content: {
+            if let article = viewModel.article {
+                Text(article)
+                    .font(.system(size: 19, weight: .regular))
                     .foregroundColor(.primary)
             }
             
-            // Comparable forms of .adjective or .adverb
-            if let comparableForms = viewModel.comparableForms {
-                Text(comparableForms)
-                    .font(.system(size: 17, weight: .medium))
-                    .foregroundColor(.primary)
-            }
-            
-            // past forms for verb
-            if let verbPastForms = viewModel.verbPastForms {
-                Text(verbPastForms)
-                    .font(.system(size: 17, weight: .medium))
-                    .foregroundColor(.primary)
-            }
-            
-            // Translation
-            Text(viewModel.translation)
-                .font(.system(size: 17, weight: .regular))
+            Text(viewModel.value)
+                .font(.system(size: 19, weight: .semibold))
                 .foregroundColor(.primary)
         })
+    }
+    
+    @ViewBuilder
+    var pluralFormRow: some View {
+        if let pluralForm = viewModel.pluralForm {
+            Text(pluralForm)
+                .font(.system(size: 17, weight: .medium))
+                .foregroundColor(.primary)
+        } else {
+            EmptyView()
+        }
+    }
+    
+    @ViewBuilder
+    var comparableOrPastFormsRow: some View {
+        // Comparable forms of .adjective or .adverb
+        if let comparableForms = viewModel.comparableForms {
+            Text(comparableForms)
+                .font(.system(size: 17, weight: .medium))
+                .lineLimit(1)
+                .foregroundColor(.primary)
+        }
+        
+        // past forms for verb
+        if let verbPastForms = viewModel.verbPastForms {
+            Text(verbPastForms)
+                .font(.system(size: 17, weight: .medium))
+                .foregroundColor(.primary)
+        }
+    }
+    
+    var translationRow: some View {
+        Text(viewModel.translation)
+            .font(.system(size: 17, weight: .regular))
+            .foregroundColor(.primary)
+    }
+    
+    @ViewBuilder
+    var summaryRow: some View {
+        if let summaryStr = viewModel.getWordGrammarSummary() {
+            Text(summaryStr)
+                .font(.system(size: 13, weight: .semibold))
+                .foregroundColor(Color(uiColor: .secondaryLabel))
+        } else {
+            EmptyView()
+        }
     }
 }
 
